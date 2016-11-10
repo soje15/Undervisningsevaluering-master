@@ -30,6 +30,7 @@ public class Run {
             PrintStream stdout = System.out;
             System.setOut(null);
             server = HttpServerFactory.create("http://" + ConfigLoader.SERVER_ADDRESS + ":" + ConfigLoader.SERVER_PORT + "/");
+
             System.setOut(stdout);
         }catch(ArrayIndexOutOfBoundsException a){
             Logging.log(a, 3, "Fejl. Sysem startede ikke!");

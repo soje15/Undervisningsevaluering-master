@@ -68,7 +68,7 @@ public class Digester {
 
         String encrypted_string = s;
 
-        if(ConfigLoader.ENCRYPTION.equals("TRUE")){
+        if(ConfigLoader.ENCRYPT_KEY.equals("TRUE")){
             encrypted_string = base64Encode(xorWithKey(encrypted_string.getBytes(), KEY.getBytes()));
         }
         return encrypted_string;
@@ -78,7 +78,7 @@ public class Digester {
 
         String decrypted_string = s;
 
-        if(ConfigLoader.ENCRYPTION.equals("TRUE")) {
+        if(ConfigLoader.ENCRYPT_KEY.equals("TRUE")) {
             decrypted_string = new String(xorWithKey(base64Decode(s), KEY.getBytes()));
         }
         return decrypted_string;
