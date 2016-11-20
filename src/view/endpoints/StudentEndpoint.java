@@ -20,6 +20,8 @@ public class StudentEndpoint extends UserEndpoint {
     @Path("/review")
     public Response addReview(String json) {
 
+        System.out.println(json);
+
         Gson gson = new Gson();
         ReviewDTO review = new Gson().fromJson(json, ReviewDTO.class);
 
@@ -27,8 +29,9 @@ public class StudentEndpoint extends UserEndpoint {
         boolean isAdded = studentCtrl.addReview(review);
 
         if (isAdded) {
-            String toJson = gson.toJson(Digester.encrypt(gson.toJson(isAdded)));
-
+           // String toJson = gson.toJson(Digester.encrypt(gson.toJson(isAdded)));
+                String toJson = gson.toJson(gson.toJson(isAdded));
+            System.out.println(toJson);
             return successResponse(200, toJson);
 
         } else {
@@ -40,6 +43,7 @@ public class StudentEndpoint extends UserEndpoint {
     @Consumes("application/json")
     @Path("/review/")
     public Response deleteReview(String data) {
+        System.out.println("Attempting to delete review");
         Gson gson = new Gson();
 
         ReviewDTO review = gson.fromJson(data, ReviewDTO.class);
@@ -48,8 +52,8 @@ public class StudentEndpoint extends UserEndpoint {
         boolean isDeleted = studentCtrl.softDeleteReview(review.getUserId(), review.getId());
 
         if (isDeleted) {
-            String toJson = gson.toJson(Digester.encrypt(gson.toJson(isDeleted)));
-
+            //String toJson = gson.toJson(Digester.encrypt(gson.toJson(isDeleted)));
+            String toJson = gson.toJson(gson.toJson(isDeleted));
             return successResponse(200, toJson);
         } else {
             return errorResponse(404, "Failed. Couldn't delete the chosen review.");

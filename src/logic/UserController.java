@@ -1,5 +1,6 @@
 package logic;
 
+import security.Digester;
 import shared.LectureDTO;
 import shared.Logging;
 import shared.ReviewDTO;
@@ -30,16 +31,20 @@ public class UserController {
 
         UserDTO user = new UserDTO();
 
+
         try {
             Map<String, String> params = new HashMap();
+
+
             params.put("cbs_mail", String.valueOf(cbs_email));
             params.put("password", String.valueOf(password));
 
-            String[] attributes = {"id"};
+            String[] attributes = {"id", "type"};
             ResultSet rs = DBWrapper.getRecords("user", attributes, params, null, 0);
 
             while (rs.next()) {
                 user.setId(rs.getInt("id"));
+                user.setType(rs.getString("type"));
                 System.out.print("User found");
                 return user;
             }

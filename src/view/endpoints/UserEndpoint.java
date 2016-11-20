@@ -62,6 +62,8 @@ public class UserEndpoint {
     @Consumes("applications/json")
     @Path("/review/{lectureId}")
     public Response getReviews(@PathParam("lectureId") int lectureId) {
+        System.out.println(lectureId);
+        System.out.println("attempting to get reviews");
         Gson gson = new Gson();
         UserController userCtrl = new UserController();
         ArrayList<ReviewDTO> reviews = userCtrl.getReviews(lectureId);
@@ -77,7 +79,6 @@ public class UserEndpoint {
     @Consumes("application/json")
     @Path("/login")
     public Response login(String data) {
-
         Gson gson = new Gson();
         UserDTO user = new Gson().fromJson(data, UserDTO.class);
         UserController userCtrl = new UserController();
@@ -91,14 +92,15 @@ public class UserEndpoint {
 
     protected Response errorResponse(int status, String message) {
 
-        return Response.status(status).entity(new Gson().toJson(Digester.encrypt("{\"message\": \"" + message + "\"}"))).build();
-        //return Response.status(status).entity(new Gson().toJson("{\"message\": \"" + message + "\"}")).build());
+        //return Response.status(status).entity(new Gson().toJson(Digester.encrypt("{\"message\": \"" + message + "\"}"))).build();
+        return Response.status(status).entity(new Gson().toJson("{\"message\": \"" + message + "\"}")).build();
     }
 
     protected Response successResponse(int status, Object data) {
         Gson gson = new Gson();
 
-        return Response.status(status).entity(gson.toJson(Digester.encrypt(gson.toJson(data)))).build();
-        //return Response.status(status).entity(gson.toJson(data)).build();
+        //return Response.status(status).entity(gson.toJson(Digester.encrypt(gson.toJson(data)))).build();
+
+        return Response.status(status).entity(gson.toJson(data)).build();
     }
 }

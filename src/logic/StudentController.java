@@ -30,6 +30,7 @@ public class StudentController extends UserController {
 
     //Metode til at indsætte et review i databasen
     public boolean addReview(ReviewDTO review) {
+        System.out.println("Attempting to add review");
         boolean isAdded = true;
 
         try {
