@@ -7,4 +7,6 @@ import javax.ws.rs.Path;
  */
 @Path("/api/teacher")
 public class TeacherEndpoint {
+
+
 }

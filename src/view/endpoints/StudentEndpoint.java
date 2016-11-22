@@ -39,7 +39,7 @@ public class StudentEndpoint extends UserEndpoint {
         }
     }
 
-    @DELETE
+    @PUT
     @Consumes("application/json")
     @Path("/review/")
     public Response deleteReview(String data) {
@@ -56,6 +56,7 @@ public class StudentEndpoint extends UserEndpoint {
             String toJson = gson.toJson(gson.toJson(isDeleted));
             return successResponse(200, toJson);
         } else {
+            System.out.println("failed to delete review");
             return errorResponse(404, "Failed. Couldn't delete the chosen review.");
         }
     }
