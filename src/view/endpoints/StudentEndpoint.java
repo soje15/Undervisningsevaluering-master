@@ -51,9 +51,35 @@ public class StudentEndpoint extends UserEndpoint {
 
         boolean isDeleted = studentCtrl.softDeleteReview(review.getUserId(), review.getId());
 
+        System.out.println(isDeleted);
+
         if (isDeleted) {
             //String toJson = gson.toJson(Digester.encrypt(gson.toJson(isDeleted)));
             String toJson = gson.toJson(gson.toJson(isDeleted));
+            return successResponse(200, toJson);
+        } else {
+            System.out.println("failed to delete review");
+            return errorResponse(404, "Failed. Couldn't delete the chosen review.");
+        }
+    }
+
+    @PUT
+    @Consumes("application/json")
+    @Path("/reviewcomment/")
+    public Response deleteComment(String data) {
+        System.out.println("Attempting to delete comment");
+        Gson gson = new Gson();
+
+        ReviewDTO review = gson.fromJson(data, ReviewDTO.class);
+        StudentController studentCtrl = new StudentController();
+
+        boolean commentDeleted = studentCtrl.deleteReviewComment(review.getUserId(), review.getId());
+
+        System.out.println(commentDeleted);
+
+        if (commentDeleted) {
+            //String toJson = gson.toJson(Digester.encrypt(gson.toJson(isDeleted)));
+            String toJson = gson.toJson(gson.toJson(commentDeleted));
             return successResponse(200, toJson);
         } else {
             System.out.println("failed to delete review");

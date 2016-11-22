@@ -73,4 +73,26 @@ public class StudentController extends UserController {
         }
         return isSoftDeleted;
     }
+
+    public boolean deleteReviewComment(int userId, int reviewId) {
+        boolean commentDeleted = true;
+
+        try {
+            Map<String, String> deleteComment = new HashMap();
+
+            deleteComment.put("comment", "");
+
+            Map<String, String> params = new HashMap();
+            params.put("id", String.valueOf(reviewId));
+            params.put("user_id", String.valueOf(userId));
+
+            DBWrapper.updateRecords("review", deleteComment, params);
+            return commentDeleted;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            commentDeleted = false;
+        }
+        return commentDeleted;
+    }
 }
