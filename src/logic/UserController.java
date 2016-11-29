@@ -28,6 +28,8 @@ public class UserController {
     }
 
     public UserDTO login(String cbs_email, String password) {
+        String decryptedUsername = Digester.decrypt(cbs_email);
+        String decryptedPassword = Digester.decrypt(password);
 
         UserDTO user = new UserDTO();
 
@@ -36,8 +38,8 @@ public class UserController {
             Map<String, String> params = new HashMap();
 
 
-            params.put("cbs_mail", String.valueOf(cbs_email));
-            params.put("password", String.valueOf(password));
+            params.put("cbs_mail", String.valueOf(decryptedUsername));
+            params.put("password", String.valueOf(decryptedPassword));
 
             String[] attributes = {"id", "type"};
             ResultSet rs = DBWrapper.getRecords("user", attributes, params, null, 0);

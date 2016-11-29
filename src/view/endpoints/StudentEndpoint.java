@@ -77,7 +77,7 @@ public class StudentEndpoint extends UserEndpoint {
         System.out.println(commentDeleted);
 
         if (commentDeleted) {
-            String toJson = Digester.encrypt(gson.toJson(commentDeleted);
+            String toJson = Digester.encrypt(gson.toJson(commentDeleted));
            // String toJson = gson.toJson(commentDeleted);
             return successResponse(200, toJson);
         } else {
