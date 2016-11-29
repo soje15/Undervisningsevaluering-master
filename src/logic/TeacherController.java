@@ -1,11 +1,10 @@
 package logic;
 
 import service.DBWrapper;
-import shared.LectureDTO;
-import shared.ReviewDTO;
-import shared.TeacherDTO;
+import shared.*;
 
 import javax.sql.rowset.CachedRowSet;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +21,8 @@ public class TeacherController extends UserController {
 
     public static void main(String[] args) {
         TeacherController ctr = new TeacherController();
+
+
 
         //Virker
         System.out.println("Course participants on course ID 3 : " + ctr.getCourseParticipants(3));
@@ -60,11 +61,17 @@ public class TeacherController extends UserController {
 
      */
 
+
+
+
+
     /**  VIRKER
      * Gennemsøger tabellen course_attendant for brugere med et bestemt course_id.
      * @param courseId id'et på det kursus man ønsker samlet antal deltagere for.
      * @return det samlede antal der er tilmeldt kurset.
      */
+
+
     public int getCourseParticipants(int courseId) {
 
         //Forbered MySQL statement

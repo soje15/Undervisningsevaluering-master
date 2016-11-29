@@ -17,6 +17,9 @@ public class CourseDTO {
     private String id;
     private String code;
     private String displaytext;
+    private int dbID;
+
+
 
     public CourseDTO() {
     }
@@ -45,6 +48,14 @@ public class CourseDTO {
 
     public String getId() {
         return id;
+    }
+
+    public int getDbID(int id) {
+        return dbID;
+    }
+
+    public void setDbID(int dbID) {
+        this.dbID = dbID;
     }
 
     public void setId(String id) {

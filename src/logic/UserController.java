@@ -21,7 +21,9 @@ public class UserController {
 
     public static void main(String[] args) {
         UserController controller = new UserController();
-        controller.getCourses(1);
+        //controller.getCourses(1);
+        controller.getLecturesByUserID(6);
+      //  controller.getCourses(6);
     }
 
     public UserController() {
@@ -179,5 +181,80 @@ public class UserController {
         }
         return courses;
     }
+
+
+
+
+
+    public ArrayList<LectureDTO> getLecturesByUserID(int userId) {
+
+        ArrayList<CourseDTO> courses = new ArrayList<CourseDTO>();
+        ArrayList<LectureDTO> lectures = new ArrayList<LectureDTO>();
+
+        try {
+
+
+            Map<String, String> params = new HashMap();
+            Map<String, String> joins = new HashMap();
+
+            params.put("user_id", String.valueOf(userId));
+            joins.put("course_attendant", "course_id");
+
+            String[] attributes = new String[]{"name", "code", "course.id"};
+
+
+           ResultSet rs = DBWrapper.getRecords("course", attributes, params, joins, 0);
+
+            while (rs.next()) {
+                CourseDTO course = new CourseDTO();
+
+                course.setDisplaytext(rs.getString("name"));
+                course.setCode(rs.getString("code"));
+                course.getDbID(rs.getInt("id"));
+                courses.add(course);
+            }
+
+            for (CourseDTO course : courses) {
+                System.out.println(course.getDisplaytext());
+
+
+                try {
+
+                    Map<String, String> params2 = new HashMap();
+
+                    params2.put("course_id", course.getDisplaytext());
+
+                    ResultSet rs2 = DBWrapper.getRecords("lecture", null, params2, null, 0);
+
+                    while (rs2.next()) {
+                        LectureDTO lecture = new LectureDTO();
+
+                        lecture.setStartDate(rs.getTimestamp("start"));
+                        lecture.setEndDate(rs.getTimestamp("end"));
+                        lecture.setId(rs.getInt("id"));
+                        lecture.setType(rs.getString("type"));
+                        lecture.setDescription(rs.getString("description"));
+                        lecture.setLocation(rs.getString("location"));
+
+                        lectures.add(lecture);
+                    }
+
+
+                } catch (SQLException e) {
+
+                }
+
+
+
+            }
+
+
+
+        }catch (SQLException e) {
+
+        }
+        return lectures;
+    }
+
 
 }

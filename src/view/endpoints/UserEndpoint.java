@@ -37,6 +37,7 @@ public class UserEndpoint {
         }
     }
 
+
     /**
      * En metode til at hente de kurser en bruger er tilmeldt.
      *
@@ -87,6 +88,24 @@ public class UserEndpoint {
             return successResponse(200, userCtrl.login(user.getCbsMail(), user.getPassword()));
         } else {
             return errorResponse(401, "Couldn't login. Try again!");
+        }
+    }
+
+
+    @GET
+    @Consumes("applications/json")
+    @Path("/lectureByID/{userId}")
+    public Response getLecturesByID(@PathParam("userId") int userID) {
+        System.out.println(userID);
+        System.out.println("attempting to get reviews");
+        Gson gson = new Gson();
+        UserController userCtrl = new UserController();
+        ArrayList<LectureDTO> lectures = userCtrl.getLecturesByUserID(userID);
+
+        if (!lectures.isEmpty()) {
+            return successResponse(200, lectures);
+        } else {
+            return errorResponse(404, "Failed. Couldn't get reviews.");
         }
     }
 
