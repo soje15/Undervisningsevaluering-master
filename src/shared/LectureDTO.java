@@ -120,4 +120,8 @@ public class LectureDTO {
                 ",\n location='" + location + '\'' +
                 '}';
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

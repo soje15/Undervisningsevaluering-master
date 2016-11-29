@@ -65,7 +65,7 @@ public class UserController {
 
         try {
             Map<String, String> params = new HashMap();
-            params.put("id", String.valueOf(lectureId));
+            params.put("lecture_id", String.valueOf(lectureId));
             params.put("is_deleted", "0");
             String[] attributes = {"id", "user_id", "lecture_id", "rating", "comment"};
 
@@ -105,9 +105,10 @@ public class UserController {
 
                 lecture.setStartDate(rs.getTimestamp("start"));
                 lecture.setEndDate(rs.getTimestamp("end"));
-                //lecture.setId(rs.getInt("id"));
+                lecture.setId(rs.getInt("id"));
                 lecture.setType(rs.getString("type"));
                 lecture.setDescription(rs.getString("description"));
+                lecture.setLocation(rs.getString("location"));
 
                 lectures.add(lecture);
             }
