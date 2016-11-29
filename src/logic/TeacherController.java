@@ -15,6 +15,9 @@ import java.util.Map;
  * Controllerklasse der håndterer metoder/funktioner specifikker for Underviser-brugeren.
  * Arver fra UserController.
  */
+
+
+//Forgot comment in last commit ;)
 public class TeacherController extends UserController {
 
     public static void main(String[] args) {
