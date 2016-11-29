@@ -29,8 +29,8 @@ public class StudentEndpoint extends UserEndpoint {
         boolean isAdded = studentCtrl.addReview(review);
 
         if (isAdded) {
-           // String toJson = gson.toJson(Digester.encrypt(gson.toJson(isAdded)));
-                String toJson = gson.toJson(gson.toJson(isAdded));
+            String toJson = Digester.encrypt(gson.toJson(isAdded));
+                //String toJson = gson.toJson(isAdded);
             System.out.println(toJson);
             return successResponse(200, toJson);
 
@@ -54,8 +54,7 @@ public class StudentEndpoint extends UserEndpoint {
         System.out.println(isDeleted);
 
         if (isDeleted) {
-            //String toJson = gson.toJson(Digester.encrypt(gson.toJson(isDeleted)));
-            String toJson = gson.toJson(gson.toJson(isDeleted));
+            String toJson = Digester.encrypt(gson.toJson(isDeleted));
             return successResponse(200, toJson);
         } else {
             System.out.println("failed to delete review");
@@ -78,8 +77,8 @@ public class StudentEndpoint extends UserEndpoint {
         System.out.println(commentDeleted);
 
         if (commentDeleted) {
-            //String toJson = gson.toJson(Digester.encrypt(gson.toJson(isDeleted)));
-            String toJson = gson.toJson(gson.toJson(commentDeleted));
+            String toJson = Digester.encrypt(gson.toJson(commentDeleted);
+           // String toJson = gson.toJson(commentDeleted);
             return successResponse(200, toJson);
         } else {
             System.out.println("failed to delete review");
