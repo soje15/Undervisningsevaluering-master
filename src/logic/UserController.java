@@ -200,6 +200,7 @@ public class UserController {
             params.put("user_id", String.valueOf(userId));
             joins.put("course_attendant", "course_id");
 
+
             String[] attributes = new String[]{"name", "code", "course.id"};
 
 
@@ -207,15 +208,15 @@ public class UserController {
 
             while (rs.next()) {
                 CourseDTO course = new CourseDTO();
-
                 course.setDisplaytext(rs.getString("name"));
                 course.setCode(rs.getString("code"));
-                course.getDbID(rs.getInt("id"));
+                course.setDbID(rs.getInt("id"));
+
                 courses.add(course);
             }
 
             for (CourseDTO course : courses) {
-                System.out.println(course.getDisplaytext());
+
 
 
                 try {
@@ -229,18 +230,20 @@ public class UserController {
                     while (rs2.next()) {
                         LectureDTO lecture = new LectureDTO();
 
-                        lecture.setStartDate(rs.getTimestamp("start"));
-                        lecture.setEndDate(rs.getTimestamp("end"));
-                        lecture.setId(rs.getInt("id"));
-                        lecture.setType(rs.getString("type"));
-                        lecture.setDescription(rs.getString("description"));
-                        lecture.setLocation(rs.getString("location"));
+                        lecture.setStartDate(rs2.getTimestamp("start"));
+                        lecture.setEndDate(rs2.getTimestamp("end"));
+                        lecture.setId(rs2.getInt("id"));
+                        lecture.setType(rs2.getString("type"));
+                        lecture.setDescription(rs2.getString("description"));
+                        lecture.setLocation(rs2.getString("location"));
+
 
                         lectures.add(lecture);
                     }
 
 
                 } catch (SQLException e) {
+                    e.printStackTrace();
 
                 }
 
@@ -251,7 +254,7 @@ public class UserController {
 
 
         }catch (SQLException e) {
-
+            e.printStackTrace();
         }
         return lectures;
     }

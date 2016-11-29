@@ -119,7 +119,7 @@ public class UserEndpoint {
     protected Response successResponse(int status, Object data) {
         Gson gson = new Gson();
 
-        return Response.status(status).entity((Digester.encrypt(gson.toJson(data)))).build();
-       // return Response.status(status).entity(gson.toJson(data)).build();
+       return Response.status(status).entity((Digester.encrypt(gson.toJson(data)))).build();
+       //return Response.status(status).entity(gson.toJson(data)).build();
     }
 }
