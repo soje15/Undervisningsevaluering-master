@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import logic.StudentController;
 import security.Digester;
 import shared.ReviewDTO;
+import shared.UserDTO;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 
 /**
  * Created by Kasper on 19/10/2016.
@@ -14,6 +16,25 @@ import javax.ws.rs.core.Response;
 
 @Path("/api/student")
 public class StudentEndpoint extends UserEndpoint {
+
+    @GET
+    @Consumes("applications/json")
+    @Path("/getReviews/")
+    public Response getReviews(String json) {
+        Gson gson = new Gson();
+        UserDTO userDTO = new Gson().fromJson(json, UserDTO.class);
+        StudentController studentCtrl = new StudentController();
+        ArrayList<ReviewDTO> reviews = studentCtrl.getReviews(userDTO.getId());
+
+        if (!reviews.isEmpty()) {
+            return successResponse(200, reviews);
+        } else {
+            return errorResponse(404, "Failed. Couldn't get lectures.");
+        }
+    }
+
+
+
 
     @POST
     @Consumes("application/json")

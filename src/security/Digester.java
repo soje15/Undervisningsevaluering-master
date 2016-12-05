@@ -49,6 +49,8 @@ public class Digester {
 
         return Digester._hash(str);
     }
+
+
     //konventerer hashværdien til hexidecimaler
     private static String _hash(String str){
         digester.update(str.getBytes());
