@@ -50,7 +50,7 @@ public class CourseDTO {
         return id;
     }
 
-    public int getDbID(int id) {
+    public int getDbID() {
         return dbID;
     }
 
