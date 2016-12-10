@@ -17,25 +17,34 @@ import java.util.ArrayList;
 @Path("/api/student")
 public class StudentEndpoint extends UserEndpoint {
 
+    /**
+     * Returns reviews from userId.
+     * @param userId
+     * @return
+     */
     @GET
     @Consumes("applications/json")
-    @Path("/getReviews/")
-    public Response getReviews(String json) {
+    @Path("/getReviews/{userId}")
+    public Response getReviews(@PathParam("userId") int userId) {
         Gson gson = new Gson();
-        UserDTO userDTO = new Gson().fromJson(json, UserDTO.class);
+
         StudentController studentCtrl = new StudentController();
-        ArrayList<ReviewDTO> reviews = studentCtrl.getReviews(userDTO.getId());
+        ArrayList<ReviewDTO> reviews = studentCtrl.getReviews(userId);
 
         if (!reviews.isEmpty()) {
+            System.out.println("returning reviews");
             return successResponse(200, reviews);
         } else {
-            return errorResponse(404, "Failed. Couldn't get lectures.");
+            return errorResponse(404, "Failed. Couldn't get reviews.");
         }
     }
 
 
-
-
+    /**
+     * Add review from review object.
+     * @param json
+     * @return
+     */
     @POST
     @Consumes("application/json")
     @Path("/review")
@@ -60,6 +69,11 @@ public class StudentEndpoint extends UserEndpoint {
         }
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     @PUT
     @Consumes("application/json")
     @Path("/review/")
@@ -83,6 +97,11 @@ public class StudentEndpoint extends UserEndpoint {
         }
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     @PUT
     @Consumes("application/json")
     @Path("/reviewcomment/")

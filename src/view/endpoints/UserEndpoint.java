@@ -63,8 +63,6 @@ public class UserEndpoint {
     @Consumes("applications/json")
     @Path("/review/{lectureId}")
     public Response getReviews(@PathParam("lectureId") int lectureId) {
-        System.out.println(lectureId);
-        System.out.println("attempting to get reviews");
         Gson gson = new Gson();
         UserController userCtrl = new UserController();
         ArrayList<ReviewDTO> reviews = userCtrl.getReviews(lectureId);
@@ -96,8 +94,6 @@ public class UserEndpoint {
     @Consumes("applications/json")
     @Path("/lectureByID/{userId}")
     public Response getLecturesByID(@PathParam("userId") int userID) {
-        System.out.println(userID);
-        System.out.println("attempting to get reviews");
         Gson gson = new Gson();
         UserController userCtrl = new UserController();
         ArrayList<LectureDTO> lectures = userCtrl.getLecturesByUserID(userID);

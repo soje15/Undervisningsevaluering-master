@@ -43,49 +43,49 @@ public class AdminController extends UserController {
         for (CourseDTO courseDTO : getCourses(idStudyChoice)) {
             System.out.println("Id: " + courseDTO.getDisplaytext() + " - Name: " + courseDTO.getCode());
         }
-                /**
-                 * Her kaldes tuiAdminMenuen, som spørger admin efter et id på den Course admin ønsker og se tilhørende lectures til
-                 */
-                Scanner input2 = new Scanner(System.in);
-                System.out.println("Indtast id for ønskede kursus: ");
-                String idCourseChoice = input2.nextLine();
+        /**
+         * Her kaldes tuiAdminMenuen, som spørger admin efter et id på den Course admin ønsker og se tilhørende lectures til
+         */
+        Scanner input2 = new Scanner(System.in);
+        System.out.println("Indtast id for ønskede kursus: ");
+        String idCourseChoice = input2.nextLine();
 
-                /**
-                 * Dette er en foreach løkke som printer alle lectures ud med deres id
-                 **/
+        /**
+         * Dette er en foreach løkke som printer alle lectures ud med deres id
+         **/
 
-                for (LectureDTO lectureDTO : getLectures(idCourseChoice)) {
-                    System.out.println("id: " + lectureDTO.getId() + " " + lectureDTO.getDescription() + " - " + lectureDTO.getType());
-                }
+        for (LectureDTO lectureDTO : getLectures(idCourseChoice)) {
+            System.out.println("id: " + lectureDTO.getId() + " " + lectureDTO.getDescription() + " - " + lectureDTO.getType());
+        }
 
-                System.out.println("Indtast id for ønskede lecture: ");
-                Scanner input3 = new Scanner(System.in);
-                int idLectureChoice = input3.nextInt();
+        System.out.println("Indtast id for ønskede lecture: ");
+        Scanner input3 = new Scanner(System.in);
+        int idLectureChoice = input3.nextInt();
 
-                /**
-                 * Dette er en foreach løkke som printer alle reviews ud på baggrund af den givne id, som admin har skrevet
-                 * ind i tuiAdminMenu.
-                 */
-                for (ReviewDTO reviewDTO : getReviews(idLectureChoice)) {
-                    System.out.println("id: " + reviewDTO.getId() + " - Rating: " + reviewDTO.getRating() + " - Comment: " + reviewDTO.getComment() + " - Soft delete: " + reviewDTO.isDeleted());
+        /**
+         * Dette er en foreach løkke som printer alle reviews ud på baggrund af den givne id, som admin har skrevet
+         * ind i tuiAdminMenu.
+         */
+        for (ReviewDTO reviewDTO : getReviews(idLectureChoice)) {
+            System.out.println("id: " + reviewDTO.getId() + " - Rating: " + reviewDTO.getRating() + " - Comment: " + reviewDTO.getComment() + " - Soft delete: " + reviewDTO.isDeleted());
 
-                }
+        }
 
-                System.out.println("Indtast id for ønskede review der skal slettes: ");
-                Scanner input4 = new Scanner(System.in);
-                int idReviewChoice = input4.nextInt();
+        System.out.println("Indtast id for ønskede review der skal slettes: ");
+        Scanner input4 = new Scanner(System.in);
+        int idReviewChoice = input4.nextInt();
 
-                /**
-                 * Nu har vi fået et id på et review fra TUIChooseReviewId, den indtastede id findes i review database-tabelen
-                 * og her ændres værdien "is_deleted" til 1 dvs. den "soft deletes"
-                 */
+        /**
+         * Nu har vi fået et id på et review fra TUIChooseReviewId, den indtastede id findes i review database-tabelen
+         * og her ændres værdien "is_deleted" til 1 dvs. den "soft deletes"
+         */
 
-                UserController u = new UserController();
-                u.softDeleteReview(0,idReviewChoice);
+        UserController u = new UserController();
+        u.softDeleteReview(0, idReviewChoice);
 
-                TUIAdminMenu tuiAdminMenu = new TUIAdminMenu();
-                tuiAdminMenu.menu(adminDTO);
-            }
+        TUIAdminMenu tuiAdminMenu = new TUIAdminMenu();
+        tuiAdminMenu.menu(adminDTO);
+    }
 
     /**
      * Denne metode er til at slette en bruger, hvor alle brugerne listes op i terminalen (med id)
@@ -96,9 +96,8 @@ public class AdminController extends UserController {
         /**
          * Viser alle brugere i databasen.
          */
-        for (UserDTO user : getUsers())
-        {
-            System.out.println("Id: " + user.getId() +  " Type: " + user.getType() + "  CBS mail: " + user.getCbsMail()) ;
+        for (UserDTO user : getUsers()) {
+            System.out.println("Id: " + user.getId() + " Type: " + user.getType() + "  CBS mail: " + user.getCbsMail());
         }
 
         //spørg efter id der skal slettes
@@ -106,31 +105,31 @@ public class AdminController extends UserController {
         System.out.println("Indtast id på bruger der skal slettes: ");
 
         int userIdDelete = input.nextInt();
-            /**
-             * Her slettes brugeren fra databasen ved hjælp af den id som der er blevet skrevet ind af admin.
-             */
+        /**
+         * Her slettes brugeren fra databasen ved hjælp af den id som der er blevet skrevet ind af admin.
+         */
 
-            try{
-                Map<String, String> course_attendant = new HashMap<String, String>();
+        try {
+            Map<String, String> course_attendant = new HashMap<String, String>();
 
-                course_attendant.put("user_id", String.valueOf(userIdDelete));
+            course_attendant.put("user_id", String.valueOf(userIdDelete));
 
-                Map<String, String> id = new HashMap<String, String>();
+            Map<String, String> id = new HashMap<String, String>();
 
-                id.put("id", String.valueOf(userIdDelete));
+            id.put("id", String.valueOf(userIdDelete));
 
-                DBWrapper.deleteRecords("course_attendant", course_attendant);
-                DBWrapper.deleteRecords("user", id);
+            DBWrapper.deleteRecords("course_attendant", course_attendant);
+            DBWrapper.deleteRecords("user", id);
 
-                System.out.println("Brugeren er slettet" + "\n");
-                TUIAdminMenu tuiAdminMenu = new TUIAdminMenu();
-                tuiAdminMenu.menu(adminDTO);
+            System.out.println("Brugeren er slettet" + "\n");
+            TUIAdminMenu tuiAdminMenu = new TUIAdminMenu();
+            tuiAdminMenu.menu(adminDTO);
 
-            } catch(SQLException e) {
-                e.printStackTrace();
-                Logging.log(e, 1, "Brugeren kunne ikke slettes" + "\n");
-            }
-}
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Logging.log(e, 1, "Brugeren kunne ikke slettes" + "\n");
+        }
+    }
 
     /**
      * Denne metode er til at lave en ny bruger, admin skal indtaste de tilhørende parametre: mail, password og type
@@ -158,37 +157,36 @@ public class AdminController extends UserController {
             }
         }
 
-                //tjekker passwordet for tal og bogstaver, om det opfylder et normalt krav til et password
-                if ((password.matches(".*[a-zA-Z]+.*"))) {
-                        try {
-                            //oprettelse af bruger i DB
-                            Map<String, String> userCreate = new HashMap<String, String>();
+        //tjekker passwordet for tal og bogstaver, om det opfylder et normalt krav til et password
+        if ((password.matches(".*[a-zA-Z]+.*"))) {
+            try {
+                //oprettelse af bruger i DB
+                Map<String, String> userCreate = new HashMap<String, String>();
 
-                            userCreate.put("cbs_mail", String.valueOf(mail));
-                            userCreate.put("password", String.valueOf(securePw2));
-                            userCreate.put("type", String.valueOf(type));
+                userCreate.put("cbs_mail", String.valueOf(mail));
+                userCreate.put("password", String.valueOf(securePw2));
+                userCreate.put("type", String.valueOf(type));
 
-                            DBWrapper.insertIntoRecords("user", userCreate);
-                            System.out.println("Brugeren " + mail + " er nu oprettet." + "\n");
-                            TUIAdminMenu tUIAdminMenu = new TUIAdminMenu();
-                            tUIAdminMenu.menu(adminDTO);
+                DBWrapper.insertIntoRecords("user", userCreate);
+                System.out.println("Brugeren " + mail + " er nu oprettet." + "\n");
+                TUIAdminMenu tUIAdminMenu = new TUIAdminMenu();
+                tUIAdminMenu.menu(adminDTO);
 
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                            Logging.log(e, 1, "Brugeren kunne ikke oprettes" + "\n");
-                        }
-                } else {
-                        System.out.println("Forkert værdi i password. Prøv igen " + "\n");
-                        tuiAdminMenu = new TUIAdminMenu();
-                        tuiAdminMenu.menu(adminDTO);
-                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Logging.log(e, 1, "Brugeren kunne ikke oprettes" + "\n");
+            }
+        } else {
+            System.out.println("Forkert værdi i password. Prøv igen " + "\n");
+            tuiAdminMenu = new TUIAdminMenu();
+            tuiAdminMenu.menu(adminDTO);
         }
+    }
 
-    public void courseAssign (AdminDTO adminDTO){
+    public void courseAssign(AdminDTO adminDTO) {
 
-        for (UserDTO user : getUsers())
-        {
-            System.out.println("Id: " + user.getId() +  " Type: " + user.getType() + "  CBS mail: " + user.getCbsMail()) ;
+        for (UserDTO user : getUsers()) {
+            System.out.println("Id: " + user.getId() + " Type: " + user.getType() + "  CBS mail: " + user.getCbsMail());
         }
 
         Scanner input = new Scanner(System.in);
@@ -199,8 +197,8 @@ public class AdminController extends UserController {
          * Dette er en foreach løkke som printer alle lectures ud med tilhørende id
          **/
 
-        for (StudyDTO studyDTO: getStudies()){
-            System.out.println("id: " + studyDTO.getId() + " - forkortelse: " + studyDTO.getShortname() + " - name: " + studyDTO.getName() );
+        for (StudyDTO studyDTO : getStudies()) {
+            System.out.println("id: " + studyDTO.getId() + " - forkortelse: " + studyDTO.getShortname() + " - name: " + studyDTO.getName());
         }
 
         Scanner input1 = new Scanner(System.in);
@@ -226,7 +224,7 @@ public class AdminController extends UserController {
 
     }
 
-    public ArrayList<CourseDTO> getCourseStudy(int idStudyChoice){
+    public ArrayList<CourseDTO> getCourseStudy(int idStudyChoice) {
         ArrayList<CourseDTO> courses = new ArrayList<CourseDTO>();
 
         try {
@@ -245,10 +243,9 @@ public class AdminController extends UserController {
 
                 courses.add(courses1);
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-            Logging.log(e,2,"Kunne ikke hente getCouses");
+            Logging.log(e, 2, "Kunne ikke hente getCouses");
 
         }
         return courses;
@@ -273,30 +270,30 @@ public class AdminController extends UserController {
 
     }
 
-        private ArrayList<AdminDTO> getUsers() {
+    private ArrayList<AdminDTO> getUsers() {
 
-            ArrayList<AdminDTO> users = new ArrayList<AdminDTO>();
-            try {
-                String[] attributes = {"id", "cbs_mail", "type"};
+        ArrayList<AdminDTO> users = new ArrayList<AdminDTO>();
+        try {
+            String[] attributes = {"id", "cbs_mail", "type"};
 
-                ResultSet rs = DBWrapper.getRecords("user", attributes, null, null, 0);
+            ResultSet rs = DBWrapper.getRecords("user", attributes, null, null, 0);
 
-                while (rs.next()) {
-                    AdminDTO user = new AdminDTO();
-                    user.setId(rs.getInt("id"));
-                    user.setCbsMail(rs.getString("cbs_mail"));
-                    user.setType(rs.getString("type"));
-                    users.add(user);
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                Logging.log(e, 1, "Funktionen getUsers kunne ikke hente Brugerne" + "\n");
+            while (rs.next()) {
+                AdminDTO user = new AdminDTO();
+                user.setId(rs.getInt("id"));
+                user.setCbsMail(rs.getString("cbs_mail"));
+                user.setType(rs.getString("type"));
+                users.add(user);
             }
 
-            return users;
-
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Logging.log(e, 1, "Funktionen getUsers kunne ikke hente Brugerne" + "\n");
         }
+
+        return users;
+
+    }
 
 
     private ArrayList<CourseDTO> getCourses() {
@@ -318,7 +315,7 @@ public class AdminController extends UserController {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            Logging.log(e,2,"Kunne ikke hente getCourses");
+            Logging.log(e, 2, "Kunne ikke hente getCourses");
         }
         return courses;
     }
@@ -344,14 +341,44 @@ public class AdminController extends UserController {
 
                 lectures.add(lecture);
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-            Logging.log(e,2,"Kunne ikke hente getLecture");
+            Logging.log(e, 2, "Kunne ikke hente getLecture");
 
 
         }
         return lectures;
+    }
+
+
+    public ArrayList<ReviewDTO> getReviews2() {
+
+        ArrayList<ReviewDTO> reviews = new ArrayList<ReviewDTO>();
+
+        try {
+            Map<String, String> params = new HashMap();
+            params.put("is_deleted", "0");
+            String[] attributes = {"id", "user_id", "lecture_id", "rating", "comment"};
+
+            ResultSet rs = DBWrapper.getRecords("review", attributes, params, null, 0);
+
+            while (rs.next()) {
+                ReviewDTO review = new ReviewDTO();
+                review.setId(rs.getInt("id"));
+                review.setUserId(rs.getInt("user_id"));
+                review.setLectureId(rs.getInt("lecture_id"));
+                review.setRating(rs.getInt("rating"));
+                review.setComment(rs.getString("comment"));
+
+                reviews.add(review);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Logging.log(e, 2, "Kunne ikke hente getReviews");
+        }
+
+        return reviews;
     }
 
 
@@ -406,9 +433,11 @@ public class AdminController extends UserController {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            Logging.log(e,2,"Kunne ikke hente Studies");
+            Logging.log(e, 2, "Kunne ikke hente Studies");
         }
         return studies;
     }
+
+
 
 }

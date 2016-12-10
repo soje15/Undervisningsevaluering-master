@@ -21,11 +21,15 @@ import java.util.ArrayList;
 @Path("/api/teacher")
 public class TeacherEndpoint extends UserEndpoint {
 
+    /**
+     * Returns number of participants on a specific course.
+     * @param courseId
+     * @return courseParticipants
+     */
     @GET
     @Consumes("applications/json")
     @Path("/courseParticipants/{courseId}")
     public Response courseParticipants(@PathParam("courseId") int courseId) {
-        System.out.println("Calling courseParticipants");
         Gson gson = new Gson();
 
         TeacherController teacherController = new TeacherController();
@@ -35,7 +39,7 @@ public class TeacherEndpoint extends UserEndpoint {
         if (courseParticipants >= 0) {
             return successResponse(200, courseParticipants);
         } else {
-            return errorResponse(404, "Failed. Couldn't get lectures.");
+            return errorResponse(404, "Failed. Couldn't get Course participants.");
         }
     }
 
