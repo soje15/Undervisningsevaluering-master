@@ -2,6 +2,5 @@
 .idea/*
 target/
 target/*
-config.json
 application.log
 project_eva.iml

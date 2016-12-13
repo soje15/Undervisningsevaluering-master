@@ -32,6 +32,8 @@ public class UserController {
     public UserDTO login(String cbs_email, String password) {
         String decryptedUsername = Digester.decrypt(cbs_email);
         String decryptedPassword = Digester.decrypt(password);
+        String doubleHashedPassword = Digester.hashWithSalt(Digester.hashWithSalt(decryptedPassword));
+
 
         UserDTO user = new UserDTO();
 
@@ -41,7 +43,7 @@ public class UserController {
 
 
             params.put("cbs_mail", String.valueOf(decryptedUsername));
-            params.put("password", String.valueOf(decryptedPassword));
+            params.put("password", String.valueOf(doubleHashedPassword));
 
             String[] attributes = {"id", "type"};
             ResultSet rs = DBWrapper.getRecords("user", attributes, params, null, 0);
@@ -165,7 +167,7 @@ public class UserController {
             params.put("course_attendant.user_id", String.valueOf(userId));
             joins.put("course_attendant", "course_id");
 
-            String[] attributes = new String[]{"name", "code", "course.id"};
+            String[] attributes = new String[]{"name", "code", "course.id" };
             ResultSet rs = DBWrapper.getRecords("course", attributes, params, joins, 0);
 
             while (rs.next()) {

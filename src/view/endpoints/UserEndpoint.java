@@ -80,6 +80,7 @@ public class UserEndpoint {
     public Response login(String data) {
         Gson gson = new Gson();
         UserDTO user = new Gson().fromJson(data, UserDTO.class);
+
         UserController userCtrl = new UserController();
 
         if (user != null) {

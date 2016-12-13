@@ -1,12 +1,8 @@
 package view.endpoints;
 
 import com.google.gson.Gson;
-import logic.AdminController;
-import logic.StudentController;
 import logic.TeacherController;
 import shared.CourseDTO;
-import shared.ReviewDTO;
-import shared.UserDTO;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -42,6 +38,24 @@ public class TeacherEndpoint extends UserEndpoint {
             return errorResponse(404, "Failed. Couldn't get Course participants.");
         }
     }
+
+
+    @GET
+    @Consumes("applications/json")
+    @Path("/course/{userId}")
+    public Response getCourses(@PathParam("userId") int userId) {
+
+        Gson gson = new Gson();
+        TeacherController teacherController = new TeacherController();
+        ArrayList<CourseDTO> courses = teacherController.getCourses(userId);
+
+        if (!courses.isEmpty()) {
+            return successResponse(200, courses);
+        } else {
+            return errorResponse(404, "Failed. Couldn't get reviews.");
+        }
+    }
+
 
 
 
